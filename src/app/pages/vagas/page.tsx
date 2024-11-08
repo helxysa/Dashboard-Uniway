@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { FiBriefcase, FiDollarSign, FiMapPin, FiPlus, FiEdit2, FiTrash2, FiArrowLeft, FiLoader } from 'react-icons/fi'
 
+
 interface Vaga {
     id: string
     titulo: string
@@ -479,70 +480,82 @@ export default function Vagas() {
                 </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
                 {vagasFiltradas.map((vaga) => (
-                    <div key={vaga.id} className="bg-white rounded-lg shadow-sm p-4 hover:shadow transition-shadow border border-gray-200">
+                    <div 
+                        key={vaga.id} 
+                        className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-1"
+                    >
                         <div className="flex justify-between items-start">
                             <div>
-                                <h2 className="text-lg font-semibold text-gray-900">{vaga.titulo}</h2>
-                                <p className="text-gray-700">{vaga.empresa}</p>
+                                <h2 className="text-xl font-bold text-gray-900 mb-1">{vaga.titulo}</h2>
+                                <p className="text-purple-600 font-medium text-lg">{vaga.empresa}</p>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-4">
                                 <button
                                     onClick={() => handleEditarVaga(vaga)}
-                                    className="text-purple-600 hover:text-purple-800 transition-colors p-1.5 rounded-full hover:bg-purple-50"
+                                    className="text-purple-600 hover:text-purple-800 transition-colors p-2 rounded-lg hover:bg-purple-50 flex items-center gap-2"
                                     title="Editar vaga"
                                 >
-                                    <FiEdit2 size={18} />
+                                    <FiEdit2 size={20} />
+                                    <span className="text-sm font-medium">Editar</span>
                                 </button>
                                 <button
                                     onClick={() => {
                                         setVagaParaExcluir(vaga.id)
                                         setShowDeleteModal(true)
                                     }}
-                                    className="text-red-500 hover:text-red-700 transition-colors p-1.5 rounded-full hover:bg-red-50"
+                                    className="text-red-500 hover:text-red-700 transition-colors p-2 rounded-lg hover:bg-red-50 flex items-center gap-2"
                                     title="Excluir vaga"
                                 >
-                                    <FiTrash2 size={18} />
+                                    <FiTrash2 size={20} />
+                                    <span className="text-sm font-medium">Excluir</span>
                                 </button>
-                                <span className="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
-                                    {vaga.tipo_contrato}
-                                </span>
                             </div>
                         </div>
 
-                        <p className="text-gray-700 mt-2 text-sm line-clamp-2">{vaga.descricao}</p>
+                        <div className="flex flex-wrap gap-3 my-4">
+                            <span className="bg-purple-100 text-purple-800 text-sm font-semibold px-4 py-1.5 rounded-full">
+                                {vaga.tipo_contrato}
+                            </span>
+                            <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-1.5 rounded-full">
+                                {vaga.curso}
+                            </span>
+                        </div>
 
-                        <div className="mt-3 space-y-1">
-                            <h3 className="font-medium text-gray-900 text-sm">Requisitos:</h3>
-                            <ul className="list-disc list-inside space-y-0.5">
+                        <p className="text-gray-700 mt-4 text-base leading-relaxed">{vaga.descricao}</p>
+
+                        <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+                            <h3 className="font-semibold text-gray-900 mb-3">Requisitos:</h3>
+                            <ul className="space-y-2">
                                 {vaga.requisitos.map((req, index) => (
-                                    <li key={index} className="text-gray-700 text-sm">{req}</li>
+                                    <li key={index} className="flex items-center gap-2 text-gray-700">
+                                        <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                        {req}
+                                    </li>
                                 ))}
                             </ul>
                         </div>
 
-                        <div className="flex flex-wrap gap-4 mt-3 pt-3 border-t border-gray-200">
-                            <div className="flex items-center gap-1.5 text-gray-700 text-sm">
-                                <FiDollarSign className="text-purple-600" size={16} />
-                                <span>{vaga.salario}</span>
+                        <div className="flex flex-wrap gap-6 mt-6 pt-6 border-t border-gray-200">
+                            <div className="flex items-center gap-2">
+                                <div className="p-2 bg-green-100 rounded-lg">
+                                    <FiDollarSign className="text-green-600" size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Salário</p>
+                                    <p className="font-semibold text-gray-900">{vaga.salario}</p>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-1.5 text-gray-700 text-sm">
-                                <FiMapPin className="text-purple-600" size={16} />
-                                <span>{vaga.localizacao}</span>
+                            <div className="flex items-center gap-2">
+                                <div className="p-2 bg-blue-100 rounded-lg">
+                                    <FiMapPin className="text-blue-600" size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Localização</p>
+                                    <p className="font-semibold text-gray-900">{vaga.localizacao}</p>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-1.5 text-gray-700 text-sm">
-                                <FiBriefcase className="text-purple-600" size={16} />
-                                <span>{vaga.curso}</span>
-                            </div>
-                            <a 
-                                href={vaga.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-purple-600 hover:text-purple-800 text-sm font-medium"
-                            >
-                                Acessar vaga
-                            </a>
                         </div>
                     </div>
                 ))}
