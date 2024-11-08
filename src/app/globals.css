@@ -6,7 +6,15 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-10px); }
+   to { opacity: 1; transform: translateX(0); }
+ }
+ 
+ .animate-fadeIn {
+   animation: fadeIn 0.5s ease-out forwards;
+ }
+ 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
